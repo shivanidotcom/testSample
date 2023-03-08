@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useReducer } from 'react'
+import { Routes,Route } from 'react-router-dom'
+import About from './components/About'
+import Contact from './components/Contact'
+import Home from './components/Home'
+import Login from './components/Login'
+import Navbar from './components/Navbar'
+import Signup from './components/SignUp'
+import Logout from './components/Logout'
+import { initialState ,reducer} from './components/reducer/UserReducer';
+import Quiz from './components/Quiz'
 
-function App() {
+export const UserContext=createContext();
+  const Routing=()=>{
+    return (
+      
+      <Routes>  
+      <Route exact path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/logout" element={<Logout />} />
+      <Route path="/quiz" element={<Quiz />} />
+      </Routes>
+
+    )
+  }
+const App= ()=> {
+  const [state,dispatch]=useReducer(reducer,initialState)
+   
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   
+    <>
+     <UserContext.Provider value={{state,dispatch}}>
+ 
+     <Navbar/>
+      <Routing/>
+     
+
+     </UserContext.Provider>
+     
+        
+  </>
+  )
 }
 
 export default App;
